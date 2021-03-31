@@ -23,8 +23,7 @@ class CreatePembayaran extends Migration
             $table->unsignedInteger('created_by');
             $table->unsignedInteger('updated_by');
             $table->timestamps();
-            $table->foreign('id_tagihan')->references('id')->on('tagihan_mitra');
-            $table->foreign('id_tagihan')->references('id')->on('tagihan_pelanggan');
+            $table->foreign('id_tagihan')->references('id')->on('tagihan');
             $table->foreign('created_by')->references('id')->on('users');
             $table->foreign('updated_by')->references('id')->on('users');
         });

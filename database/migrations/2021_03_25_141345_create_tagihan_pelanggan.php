@@ -13,18 +13,16 @@ class CreateTagihanPelanggan extends Migration
      */
     public function up()
     {
-        Schema::create('tagihan_pelanggan', function (Blueprint $table) {
+        Schema::create('tagihan', function (Blueprint $table) {
             $table->increments('id');
-            $table->unsignedInteger('id_mitra');
-            $table->unsignedInteger('id_pelanggan');
-            $table->unsignedInteger('id_paket');
+            $table->unsignedInteger('collector');
+            $table->unsignedInteger('payer');
             $table->integer('jumlah_tagihan');
             $table->date('tagihan_bulan');
             $table->enum('status_tagihan', ['Masuk', 'Lunas']);
             $table->timestamps();
-            $table->foreign('id_mitra')->references('id')->on('mitra');
-            $table->foreign('id_pelanggan')->references('id')->on('pelanggan');
-            $table->foreign('id_paket')->references('id')->on('paket');
+            $table->foreign('collector')->references('id')->on('users');
+            $table->foreign('payer')->references('id')->on('users');
         });
     }
 
