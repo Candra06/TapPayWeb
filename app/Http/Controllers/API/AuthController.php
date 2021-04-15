@@ -38,7 +38,7 @@ class AuthController extends Controller
             ]);
             return response()->json([
                 'success' => 'Successfully created user!'
-            ], 201);
+            ], 200);
         } catch (\Throwable $th) {
             return response()->json([
                 'error' => $th
@@ -72,7 +72,7 @@ class AuthController extends Controller
             ]);
             return response()->json([
                 'success' => 'Successfully created user!'
-            ], 201);
+            ], 200);
         } catch (\Throwable $th) {
             return response()->json([
                 'error' => $th

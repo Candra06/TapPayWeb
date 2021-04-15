@@ -22,6 +22,28 @@ Route::group(['prefix' => 'auth'], function () {
         Route::get('logout', 'AuthController@logout');
         Route::get('user', 'AuthController@user');
     });
+
+});
+
+Route::group(['middleware' => 'auth:api'], function () {
+    Route::group(['prefix' => 'mitra'], function(){
+        Route::get('paket/', 'API\PaketController@index');
+        Route::get('paket/{id}', 'API\PaketController@show');
+        Route::post('paket/create', 'API\PaketController@store');
+        Route::post('paket/edit/{id}', 'API\PaketController@update');
+        Route::get('paket/delete/{id}', 'API\PaketController@destroy');
+
+
+    });
+
+    Route::group(['prefix' => 'langganan'], function(){
+        Route::post('create', 'API\PelangganController@createInvitation');
+        Route::post('invite', 'API\PelangganController@inputInvitation');
+    });
+
+    Route::group(['prefix' => 'tagihan'], function(){
+        Route::post('generate', 'API\TagihanController@generate');
+    });
 });
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
