@@ -1,14 +1,14 @@
 @extends('layout.master')
 @section('content')
-      <!-- ============================================================== -->
+    <!-- ============================================================== -->
     <!-- Bread crumb and right sidebar toggle -->
     <!-- ============================================================== -->
     <div class="row page-titles">
         <div class="col-md-5 col-8 align-self-center">
             <h3 class="text-themecolor">Data Mitra</h3>
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="javascript:void(0)">Home</a></li>
-                <li class="breadcrumb-item"><a href="javascript:void(0)">Mitra</a></li>
+                <li class="breadcrumb-item"><a href="/">Home</a></li>
+                <li class="breadcrumb-item active">Mitra</li>
             </ol>
         </div>
 
@@ -20,7 +20,7 @@
         <div class="col-lg-12 col-xlg-12 col-md-12">
             <div class="card">
                 <div class="card-body">
-                    <h4 class="card-title">Data Tautan</h4>
+                    <h4 class="card-title">Data Mitra</h4>
 
                     @if (session('status'))
                         <div class="alert alert-success" role="alert">
@@ -43,10 +43,10 @@
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td><a href="">Nama Usaha</a></td>
-                                    <td>Nama Usaha</td>
-                                    <td>Nama Usaha</td>
-                                    <td>Nama Usaha</td>
+                                    <td><a href="/mitra/detail/{id}">Nama Usaha</a></td>
+                                    <td>088888888888</td>
+                                    <td>namausaha</td>
+                                    <td>Aktif</td>
                                     <td>
                                         <a href="" class="btn btn-info"><span><i class="fa fa-pencil"></i></span></a>
                                         <a href="" class="btn btn-danger"><span><i class="fa fa-trash"></i></span></a>
@@ -65,31 +65,9 @@
                                         </td>
                                     </tr>
                                 @endforeach --}}
-
                             </tbody>
                         </table>
                     </div>
-                </div>
-            </div>
-
-            <div class="card">
-                <div class="card-body">
-                    <h4 class="card-title">Data Tautan</h4>
-
-                   <div class="row">
-                       <div class="col-md-4">
-                           <small class="text-muted">Nama Usaha</small>
-                           <h6>Nama Usaha</h6>
-                       </div>
-                       <div class="col-md-4">
-                        <small class="text-muted">Nama Usaha</small>
-                        <h6>Nama Usaha</h6>
-                    </div>
-                    <div class="col-md-4">
-                        <small class="text-muted">Nama Usaha</small>
-                        <h6>Nama Usaha</h6>
-                    </div>
-                   </div>
                 </div>
             </div>
         </div>

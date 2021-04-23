@@ -7,8 +7,9 @@
         <div class="col-md-5 col-8 align-self-center">
             <h3 class="text-themecolor">Data Mitra</h3>
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="javascript:void(0)">Home</a></li>
-                <li class="breadcrumb-item"><a href="javascript:void(0)">Mitra</a></li>
+                <li class="breadcrumb-item"><a href="/">Home</a></li>
+                <li class="breadcrumb-item"><a href="/mitra">Mitra</a></li>
+                <li class="breadcrumb-item active">Detail</li>
             </ol>
         </div>
 
@@ -16,82 +17,103 @@
     <!-- ============================================================== -->
     <!-- End Bread crumb and right sidebar toggle -->
     <!-- ============================================================== -->
+
+    <!-- Detail Mitra -->
     <div class="row">
         <div class="col-lg-12 col-xlg-12 col-md-12">
             <div class="card">
-                <div class="card-body">
-                    <h4 class="card-title">Data Tautan</h4>
-
-                    @if (session('status'))
-                        <div class="alert alert-success" role="alert">
-                            {{ session('status') }}
-                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                    @endif
-                    <div class="table-responsive m-t-40">
-                        <table id="myTable" class="table table-bordered table-striped">
-                            <thead>
-                                <tr>
-                                    <th>Nama Usaha</th>
-                                    <th>Telepon</th>
-                                    <th>Username</th>
-                                    <th>Status</th>
-                                    <th>Aksi</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td><a href="">Nama Usaha</a></td>
-                                    <td>Nama Usaha</td>
-                                    <td>Nama Usaha</td>
-                                    <td>Nama Usaha</td>
-                                    <td>
-                                        <a href="" class="btn btn-info"><span><i class="fa fa-pencil"></i></span></a>
-                                        <a href="" class="btn btn-danger"><span><i class="fa fa-trash"></i></span></a>
-                                    </td>
-                                </tr>
-                                {{-- @foreach ($data as $dt)
-                                    <tr>
-                                        <td>{{ $dt->kategori }}</td>
-                                        <td><a href="{{ $dt->link }}"></a>{{ $dt->link }}</td>
-                                        <td>{{ $dt->status }}</td>
-                                        <td>
-                                        <a href="{{url('tautan/'.$dt->id.'/edit')}}"><button class="btn btn-success"><i
-                                                        class="fa fa-pencil"></i></button></a>
-                                            <a href=""><button class="btn btn-danger"><i
-                                                        class="fa fa-trash"></i></button></a>
-                                        </td>
-                                    </tr>
-                                @endforeach --}}
-
-                            </tbody>
-                        </table>
-                    </div>
+                <div class="card-header bg-info">
+                    <h4 class="mb-0 text-white">Detail Mitra</h4>
                 </div>
-            </div>
-
-            <div class="card">
                 <div class="card-body">
-                    <h4 class="card-title">Data Tautan</h4>
-
-                   <div class="row">
-                       <div class="col-md-4">
-                           <small class="text-muted">Nama Usaha</small>
-                           <h6>Nama Usaha</h6>
-                       </div>
-                       <div class="col-md-4">
-                        <small class="text-muted">Nama Usaha</small>
-                        <h6>Nama Usaha</h6>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <small class="text-muted">Nama Usaha</small>
+                            <h6>Nama Usaha</h6>
+                        </div>
+                        <div class="col-md-4">
+                            <small class="text-muted">Info</small>
+                            <h6>BRI. 123</h6>
+                        </div>
+                        <div class="col-md-4">
+                            <small class="text-muted">Username</small>
+                            <h6>username</h6>
+                        </div>
                     </div>
-                    <div class="col-md-4">
-                        <small class="text-muted">Nama Usaha</small>
-                        <h6>Nama Usaha</h6>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <small class="text-muted">Telepon</small>
+                            <h6>0888888888888</h6>
+                        </div>
+                        <div class="col-md-4">
+                            <small class="text-muted">Alamat</small>
+                            <h6>Jl. KIS Mangunsarkoro</h6>
+                        </div>
+                        <div class="col-md-4">
+                            <small class="text-muted">Password</small>
+                            <h6>username123</h6>
+                        </div>
                     </div>
-                   </div>
                 </div>
             </div>
         </div>
     </div>
+
+    <!-- List Paket -->
+    <div class="row">
+        <div class="col-lg-12 col-xlg-12 col-md-12">
+            <div class="card">
+                <h4 class="card-header">List Paket</h4>
+                <div class="card-body">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Nama Paket</th>
+                            <th scope="col">Tarif</th>
+                            <th scope="col">Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                            <th scope="row">1</th>
+                            <td>Paket Internet</td>
+                            <td>100000</td>
+                            <td>Aktif</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>    
+
+    <!-- List Pelanggan -->
+    <div class="row">
+        <div class="col-lg-12 col-xlg-12 col-md-12">
+            <div class="card">
+                <h4 class="card-header">List Pelanggan</h4>
+                <div class="card-body">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Nama Pelanggan</th>
+                            <th scope="col">Nama Paket</th>
+                            <th scope="col">Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                            <th scope="row">1</th>
+                            <td><a href="#">Nama Pelanggan<a></td>
+                            <td>Paket Internet</td>
+                            <td>Aktif</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>    
 @endsection
