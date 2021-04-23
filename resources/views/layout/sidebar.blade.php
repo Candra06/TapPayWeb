@@ -30,6 +30,20 @@
                         </li>
 
                         <li>
+                            <a class="waves-effect waves-dark" href="{{ url('/mitra')}}" aria-expanded="true"><i class="mdi mdi-gauge"></i><span class="hide-menu">Mitra </span></a>
+                        </li>
+
+                        <li>
+                            <a class="waves-effect waves-dark" href="{{ url('/pelanggan')}}" aria-expanded="true"><i class="mdi mdi-gauge"></i><span class="hide-menu">Pelanggan </span></a>
+
+                        </li>
+
+                        <li>
+                            <a class="waves-effect waves-dark" href="{{ url('/tagihan')}}" aria-expanded="true"><i class="mdi mdi-gauge"></i><span class="hide-menu">Tagihan </span></a>
+
+                        </li>
+
+                        <li>
                             <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i class="mdi mdi-email"></i><span class="hide-menu">Inbox</span></a>
                             <ul aria-expanded="false" class="collapse">
                                 <li><a href="app-email.html">Mailbox</a></li>
