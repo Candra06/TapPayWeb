@@ -104,7 +104,7 @@ class AuthController extends Controller
                 } else if ($data->role == 'Pelanggan') {
                     $pelanggan = Pelanggan::where('id_akun', $data->id)->first();
                     $success['id_pelanggan'] = $pelanggan->id;
-                    $success['nama_usaha'] = $pelanggan->nama;
+                    $success['nama'] = $pelanggan->nama;
                     $success['alamat'] = $pelanggan->alamat;
                     $success['telepon'] = $pelanggan->telepon;
                     $success['status'] = $pelanggan->status;
