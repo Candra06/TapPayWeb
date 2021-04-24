@@ -19,3 +19,4 @@ Route::get('/', function () {
 
 Route::get('/mitra', 'MitraController@index');
 Route::get('/mitra/detail/{id}', 'MitraController@show');
+Route::get('/mitra/edit/{id}', 'MitraController@edit');

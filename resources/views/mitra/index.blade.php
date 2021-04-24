@@ -48,7 +48,7 @@
                                     <td>namausaha</td>
                                     <td>Aktif</td>
                                     <td>
-                                        <a href="" class="btn btn-info"><span><i class="fa fa-pencil"></i></span></a>
+                                        <a href="/mitra/edit/{id}" class="btn btn-info"><span><i class="fa fa-pencil"></i></span></a>
                                         <a href="" class="btn btn-danger"><span><i class="fa fa-trash"></i></span></a>
                                     </td>
                                 </tr>

@@ -56,7 +56,7 @@ class MitraController extends Controller
      */
     public function edit($id)
     {
-        //
+        return view('mitra.edit');
     }
 
     /**
