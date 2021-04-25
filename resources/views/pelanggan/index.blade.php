@@ -5,10 +5,10 @@
     <!-- ============================================================== -->
     <div class="row page-titles">
         <div class="col-md-5 col-8 align-self-center">
-            <h3 class="text-themecolor">Data Mitra</h3>
+            <h3 class="text-themecolor">Data Pelanggan</h3>
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="{{url('/')}}">Home</a></li>
-                <li class="breadcrumb-item active">Mitra</li>
+                <li class="breadcrumb-item active">Pelanggan</li>
             </ol>
         </div>
 
@@ -20,7 +20,7 @@
         <div class="col-lg-12 col-xlg-12 col-md-12">
             <div class="card">
                 <div class="card-body">
-                    <h4 class="card-title">Data Mitra</h4>
+                    <h4 class="card-title">Data Pelanggan</h4>
 
                     @if (session('status'))
                         <div class="alert alert-success" role="alert">
@@ -34,7 +34,7 @@
                         <table id="myTable" class="table table-bordered table-striped">
                             <thead>
                                 <tr>
-                                    <th>Nama Usaha</th>
+                                    <th>Nama Pelanggan</th>
                                     <th>Telepon</th>
                                     <th>Username</th>
                                     <th>Status</th>
@@ -43,12 +43,12 @@
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td><a href="{{url('/mitra/detail/{id}')}}">Nama Usaha</a></td>
+                                    <td><a href="{{url('/pelanggan/detail/{id}')}}">Nama Pelanggan</a></td>
                                     <td>088888888888</td>
-                                    <td>namausaha</td>
+                                    <td>namapelanggan</td>
                                     <td>Aktif</td>
                                     <td>
-                                        <a href="{{url('/mitra/edit/{id}')}}" class="btn btn-info"><span><i class="fa fa-pencil"></i></span></a>
+                                        <a href="{{url('/pelanggan/edit/{id}')}}" class="btn btn-info"><span><i class="fa fa-pencil"></i></span></a>
                                         <a href="" class="btn btn-danger"><span><i class="fa fa-trash"></i></span></a>
                                     </td>
                                 </tr>
