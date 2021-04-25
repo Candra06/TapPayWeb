@@ -43,12 +43,12 @@
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td><a href="/mitra/detail/{id}">Nama Usaha</a></td>
+                                    <td><a href="{{ url('/mitra/detail/1')}}">Nama Usaha</a></td>
                                     <td>088888888888</td>
                                     <td>namausaha</td>
                                     <td>Aktif</td>
                                     <td>
-                                        <a href="/mitra/edit/{id}" class="btn btn-info"><span><i class="fa fa-pencil"></i></span></a>
+                                        <a href="/mitra/edit/1" class="btn btn-info"><span><i class="fa fa-pencil"></i></span></a>
                                         <a href="" class="btn btn-danger"><span><i class="fa fa-trash"></i></span></a>
                                     </td>
                                 </tr>
