@@ -21,10 +21,11 @@
             <div class="card">
                 <div class="card-body">
                     <div class="d-flex flex-row">
-                        <div class="round round-lg align-self-center round-info"><i class="ti-wallet"></i></div>
+                        <div class="round round-lg align-self-center round-info"><i class="mdi mdi-human-greeting"></i>
+                        </div>
                         <div class="m-l-10 align-self-center">
-                            <h3 class="m-b-0 font-light">$3249</h3>
-                            <h5 class="text-muted m-b-0">Total Revenue</h5>
+                            <h3 class="m-b-0 font-lgiht">2376</h3>
+                            <small class="text-muted m-b-0">Jumlah Mitra</small>
                         </div>
                     </div>
                 </div>
@@ -36,11 +37,11 @@
             <div class="card">
                 <div class="card-body">
                     <div class="d-flex flex-row">
-                        <div class="round round-lg align-self-center round-warning"><i class="mdi mdi-cellphone-link"></i>
+                        <div class="round round-lg align-self-center round-warning"><i class="mdi mdi-account-multiple"></i>
                         </div>
                         <div class="m-l-10 align-self-center">
-                            <h3 class="m-b-0 font-lgiht">$2376</h3>
-                            <h5 class="text-muted m-b-0">Online Revenue</h5>
+                            <h3 class="m-b-0 font-lgiht">2376</h3>
+                            <small class="text-muted m-b-0">Jumlah Pelanggan</small>
                         </div>
                     </div>
                 </div>
@@ -52,11 +53,11 @@
             <div class="card">
                 <div class="card-body">
                     <div class="d-flex flex-row">
-                        <div class="round round-lg align-self-center round-primary"><i class="mdi mdi-cart-outline"></i>
+                        <div class="round round-lg align-self-center round-primary"><i class="ti-wallet"></i>
                         </div>
                         <div class="m-l-10 align-self-center">
-                            <h3 class="m-b-0 font-lgiht">$1795</h3>
-                            <h5 class="text-muted m-b-0">Offline Revenue</h5>
+                            <h3 class="m-b-0 font-lgiht">Rp. 1795</h3>
+                            <small class="text-muted m-b-0">Total Bayar</small>
                         </div>
                     </div>
                 </div>
@@ -68,15 +69,74 @@
             <div class="card">
                 <div class="card-body">
                     <div class="d-flex flex-row">
-                        <div class="round round-lg align-self-center round-danger"><i class="mdi mdi-bullseye"></i></div>
+                        <div class="round round-lg align-self-center round-danger"><i class="mdi mdi-credit-card"></i></div>
                         <div class="m-l-10 align-self-center">
-                            <h3 class="m-b-0 font-lgiht">$687</h3>
-                            <h5 class="text-muted m-b-0">Ad. Expense</h5>
+                            <h3 class="m-b-0 font-lgiht">Rp. 687</h3>
+                            <small class="text-muted m-b-0">Total Tagihan</small>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
         <!-- Column -->
+    </div>
+    <div class="row">
+        <div class="col-lg-12 col-xlg-12 col-md-12">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">List Tagihan</h4>
+                    <div class="row">
+                        <!-- Generate -->
+                        <div class="col-lg-7">
+                            <button type="button" class="btn btn-info">Generate Tagihan</button>
+                        </div>
+                        <!-- Search -->
+                        <div class="col-lg-5">
+                            <form class="app-search">
+                                <input type="text" class="form-control" placeholder="Cari Tagihan"> 
+                            </form>
+                        </div>
+                    </div>
+                    <div class="table-responsive m-t-40">
+                        <table id="myTable" class="table table-bordered table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Nama Usaha</th>
+                                    <th>Jumlah Tagihan</th>
+                                    <th>Bulan</th>
+                                    <th>Status</th>
+                                    <th>Aksi</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><a href="{{ url('/mitra/detail/1')}}">Nama Usaha</a></td>
+                                    <td>Rp. 100000,-</td>
+                                    <td>Januari</td>
+                                    <td>Masuk</td>
+                                    <td>
+                                        <a href="{{url('/mitra/edit/1')}}" class="btn btn-info"><span><i class="fa fa-pencil"></i></span></a>
+                                        <a href="" class="btn btn-danger"><span><i class="fa fa-trash"></i></span></a>
+                                    </td>
+                                </tr>
+                                {{-- @foreach ($data as $dt)
+                                    <tr>
+                                        <td>{{ $dt->kategori }}</td>
+                                        <td><a href="{{ $dt->link }}"></a>{{ $dt->link }}</td>
+                                        <td>{{ $dt->status }}</td>
+                                        <td>
+                                        <a href="{{url('tautan/'.$dt->id.'/edit')}}"><button class="btn btn-success"><i
+                                                        class="fa fa-pencil"></i></button></a>
+                                            <a href=""><button class="btn btn-danger"><i
+                                                        class="fa fa-trash"></i></button></a>
+                                        </td>
+                                    </tr>
+                                @endforeach --}}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 @endsection
