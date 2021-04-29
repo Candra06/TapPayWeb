@@ -31,7 +31,7 @@
                     <div class="row">
                         <div class="col-md-6">
                             <small class="text-muted">Nama Usaha</small>
-                            <h6>Nama Usaha</h6>
+                            <h6>{{$detail->nama_usaha}}</h6>
                         </div>
                         <div class="col-md-6">
                             <small class="text-muted">Username</small>
@@ -44,8 +44,8 @@
                             <h6>0888888888888</h6>
                         </div>
                         <div class="col-md-6">
-                            <small class="text-muted">Password</small>
-                            <h6>username123</h6>
+                            <small class="text-muted">Status</small>
+                            <h6>Aktif</h6>
                         </div>
                     </div>
                     <div class="row">
@@ -54,16 +54,11 @@
                             <h6>Jl. KIS Mangunsarkoro</h6>
                         </div>
                         <div class="col-md-6">
-                            <small class="text-muted">Status</small>
-                            <h6>Aktif</h6>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-12">
                             <small class="text-muted">Info</small>
                             <h6>BRI. 123</h6>
                         </div>
                     </div>
+
                 </div>
             </div>
         </div>
@@ -99,7 +94,7 @@
                 </div>
             </div>
         </div>
-    </div>    
+    </div>
     <!-- ----------------------------------------- -->
     <!-- List Pelanggan -->
     <!-- ----------------------------------------- -->
@@ -131,5 +126,5 @@
                 </div>
             </div>
         </div>
-    </div>    
+    </div>
 @endsection

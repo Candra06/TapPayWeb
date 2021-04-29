@@ -42,16 +42,18 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td><a href="{{ url('/mitra/detail/1')}}">Nama Usaha</a></td>
-                                    <td>088888888888</td>
-                                    <td>namausaha</td>
-                                    <td>Aktif</td>
-                                    <td>
-                                        <a href="{{url('/mitra/edit/1')}}" class="btn btn-info"><span><i class="fa fa-pencil"></i></span></a>
-                                        <a href="" class="btn btn-danger"><span><i class="fa fa-trash"></i></span></a>
-                                    </td>
-                                </tr>
+                               @foreach ($data as $item)
+                               <tr>
+                                <td><a href="{{ url('/mitra/detail/'.$item->id)}}">{{ $item->nama_usaha }}</a></td>
+                                <td>{{ $item->telepon }}</td>
+                                <td>{{ $item->username }}</td>
+                                <td>{{ $item->status }}</td>
+                                <td>
+                                    <a href="{{url('/mitra/edit/1')}}" class="btn btn-info"><span><i class="fa fa-pencil"></i></span></a>
+                                    <a href="" class="btn btn-danger"><span><i class="fa fa-trash"></i></span></a>
+                                </td>
+                            </tr>
+                               @endforeach
                                 {{-- @foreach ($data as $dt)
                                     <tr>
                                         <td>{{ $dt->kategori }}</td>

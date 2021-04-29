@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Mitra;
+use App\Paket;
 use Illuminate\Http\Request;
 
 class MitraController extends Controller
@@ -13,7 +15,11 @@ class MitraController extends Controller
      */
     public function index()
     {
-        return view('mitra.index');
+        $data = Mitra::leftJoin('users', 'users.id', 'mitra.id_akun')
+        ->select('users.username', 'mitra.*')
+        ->get();
+        // return $data;
+        return view('mitra.index', compact('data'));
     }
 
     /**
@@ -45,7 +51,14 @@ class MitraController extends Controller
      */
     public function show($id)
     {
-        return view('mitra.detail');
+        $detail = Mitra::leftJoin('users', 'users.id', 'mitra.id_akun')
+        ->select('users.username', 'mitra.*')
+        ->where('mitra.id', $id)
+        ->first();
+
+        $paket = Paket::where('id_mitra', $id)->get();
+        // return $detail;
+        return view('mitra.detail', compact('detail', 'paket'));
     }
 
     /**

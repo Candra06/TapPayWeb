@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API;
 
 use App\Berlangganan;
+use App\Helpers\Helper;
 use App\Http\Controllers\Controller;
 use App\Paket;
 use App\Mitra;
@@ -13,6 +14,8 @@ use Illuminate\Support\Facades\Date;
 
 class TagihanController extends Controller
 {
+    public $oke = 200;
+    public $fail = 401;
     public function generate(Request $request)
     {
 
@@ -45,11 +48,35 @@ class TagihanController extends Controller
             }
             return response()->json([
                 'success' => 'Berhasil generate tagihan'
-            ], 200);
+            ], $this->oke);
         } catch (\Throwable $th) {
             return response()->json([
                 'error' => $th
-            ], 400);
+            ], $this->fail);
+        }
+    }
+
+    public function payable($idPayer)
+    {
+        try {
+            $data = Tagihan::where('payer', $idPayer)->where('status_tagihan', 'Masuk')->get();
+            $paylable = [];
+            $jumlah = 0;
+            foreach ($data as $key) {
+                $jumlah = $jumlah + $key->jumlah_tagihan;
+                $paylable[] = ([
+                    'label' => Helper::bulantahun($key->tagihan_bulan),
+                    'bulan' => $key->tagihan_bulan,
+                    'jumlah' => $jumlah,
+                ]);
+            }
+            return response()->json([
+                'payable' => $paylable
+            ],  $this->oke);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'error' => $th
+            ],  $this->oke);
         }
     }
 }
