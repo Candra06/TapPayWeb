@@ -101,7 +101,7 @@
                         <table id="myTable" class="table table-bordered table-striped">
                             <thead>
                                 <tr>
-                                    <th>Nama Usaha</th>
+                                    <th>Username</th>
                                     <th>Jumlah Tagihan</th>
                                     <th>Bulan</th>
                                     <th>Status</th>
@@ -109,29 +109,18 @@
                                 </tr>
                             </thead>
                             <tbody>
+                                @foreach ($data as $item)
                                 <tr>
-                                    <td><a href="{{ url('/mitra/detail/1')}}">Nama Usaha</a></td>
-                                    <td>Rp. 100000,-</td>
-                                    <td>Januari</td>
-                                    <td>Masuk</td>
+                                    <td><a href="{{ url('/mitra/detail/'.$item->payer)}}">{{$item->username}}</a></td>
+                                    <td>{{$item->jumlah_tagihan}}</td>
+                                    <td>{{date('M', strtotime($item->tagihan_bulan))}}</td>
+                                    <td>{{$item->status_tagihan}}</td>
                                     <td>
-                                        <a href="{{url('/mitra/edit/1')}}" class="btn btn-info"><span><i class="fa fa-pencil"></i></span></a>
+                                        <a href="{{url('/mitra/edit/'.$item->id)}}" class="btn btn-info"><span><i class="fa fa-pencil"></i></span></a>
                                         <a href="" class="btn btn-danger"><span><i class="fa fa-trash"></i></span></a>
                                     </td>
                                 </tr>
-                                {{-- @foreach ($data as $dt)
-                                    <tr>
-                                        <td>{{ $dt->kategori }}</td>
-                                        <td><a href="{{ $dt->link }}"></a>{{ $dt->link }}</td>
-                                        <td>{{ $dt->status }}</td>
-                                        <td>
-                                        <a href="{{url('tautan/'.$dt->id.'/edit')}}"><button class="btn btn-success"><i
-                                                        class="fa fa-pencil"></i></button></a>
-                                            <a href=""><button class="btn btn-danger"><i
-                                                        class="fa fa-trash"></i></button></a>
-                                        </td>
-                                    </tr>
-                                @endforeach --}}
+                                @endforeach
                             </tbody>
                         </table>
                     </div>

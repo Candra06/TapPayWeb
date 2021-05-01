@@ -42,29 +42,18 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td><a href="{{url('/pelanggan/detail/{id}')}}">Nama Pelanggan</a></td>
-                                    <td>088888888888</td>
-                                    <td>namapelanggan</td>
-                                    <td>Aktif</td>
-                                    <td>
-                                        <a href="{{url('/pelanggan/edit/{id}')}}" class="btn btn-info"><span><i class="fa fa-pencil"></i></span></a>
-                                        <a href="" class="btn btn-danger"><span><i class="fa fa-trash"></i></span></a>
-                                    </td>
-                                </tr>
-                                {{-- @foreach ($data as $dt)
+                                @foreach ($data as $item)
                                     <tr>
-                                        <td>{{ $dt->kategori }}</td>
-                                        <td><a href="{{ $dt->link }}"></a>{{ $dt->link }}</td>
-                                        <td>{{ $dt->status }}</td>
+                                        <td><a href="{{url('/pelanggan/detail/'.$item->id)}}">{{$item->nama}}</a></td>
+                                        <td>{{$item->telepon}}</td>
+                                        <td>{{$item->username}}</td>
+                                        <td>{{$item->status}}</td>
                                         <td>
-                                        <a href="{{url('tautan/'.$dt->id.'/edit')}}"><button class="btn btn-success"><i
-                                                        class="fa fa-pencil"></i></button></a>
-                                            <a href=""><button class="btn btn-danger"><i
-                                                        class="fa fa-trash"></i></button></a>
+                                            <a href="{{url('/pelanggan/edit/'.$item->id)}}" class="btn btn-info"><span><i class="fa fa-pencil"></i></span></a>
+                                            <a href="" class="btn btn-danger"><span><i class="fa fa-trash"></i></span></a>
                                         </td>
                                     </tr>
-                                @endforeach --}}
+                                @endforeach
                             </tbody>
                         </table>
                     </div>

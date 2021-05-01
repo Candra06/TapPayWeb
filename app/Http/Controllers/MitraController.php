@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Mitra;
 use App\Paket;
+use App\Berlangganan;
 use Illuminate\Http\Request;
 
 class MitraController extends Controller
@@ -57,8 +58,13 @@ class MitraController extends Controller
         ->first();
 
         $paket = Paket::where('id_mitra', $id)->get();
-        // return $detail;
-        return view('mitra.detail', compact('detail', 'paket'));
+
+        $berlangganan = Berlangganan::leftJoin('pelanggan', 'pelanggan.id', 'berlangganan.id_pelanggan')
+        ->leftjoin('paket', 'paket.id', 'berlangganan.id_paket')
+        ->select('pelanggan.nama', 'paket.nama_paket', 'pelanggan.status', 'pelanggan.id')
+        ->where('berlangganan.id_mitra', $id)
+        ->get();
+        return view('mitra.detail', compact('detail', 'paket', 'berlangganan'));
     }
 
     /**

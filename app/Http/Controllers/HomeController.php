@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Pelanggan;
+use App\Tagihan;
 use Illuminate\Http\Request;
 
-class PelangganController extends Controller
+class HomeController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,11 +14,13 @@ class PelangganController extends Controller
      */
     public function index()
     {
-        $data = Pelanggan::leftjoin('users', 'users.id', 'pelanggan.id_akun')
-        ->select('users.username', 'pelanggan.*')
+        $data = Tagihan::leftJoin('users', 'users.id', 'tagihan.payer')
+        ->select('users.username', 'tagihan.*')
+        ->where('tagihan.payer', '=', 'users.role')
+        ->orwhere('users.role', '=', 'mitra')
         ->get();
         // return $data;
-        return view('pelanggan.index', compact('data'));
+        return view('home.index', compact('data'));
     }
 
     /**
@@ -50,11 +52,7 @@ class PelangganController extends Controller
      */
     public function show($id)
     {
-        $detail = Pelanggan::leftJoin('users', 'users.id', 'pelanggan.id_akun')
-        ->select('users.username', 'pelanggan.*')
-        ->where('pelanggan.id', $id)
-        ->first();
-        return view('pelanggan.detail', compact('detail'));
+        //
     }
 
     /**
@@ -65,7 +63,7 @@ class PelangganController extends Controller
      */
     public function edit($id)
     {
-        return view('pelanggan.edit');
+        //
     }
 
     /**

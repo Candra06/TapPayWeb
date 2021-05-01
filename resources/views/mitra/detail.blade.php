@@ -35,27 +35,27 @@
                         </div>
                         <div class="col-md-6">
                             <small class="text-muted">Username</small>
-                            <h6>username</h6>
+                            <h6>{{$detail->username}}</h6>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-md-6">
                             <small class="text-muted">Telepon</small>
-                            <h6>0888888888888</h6>
+                            <h6>{{$detail->telepon}}</h6>
                         </div>
                         <div class="col-md-6">
                             <small class="text-muted">Status</small>
-                            <h6>Aktif</h6>
+                            <h6>{{$detail->status}}</h6>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-md-6">
                             <small class="text-muted">Alamat</small>
-                            <h6>Jl. KIS Mangunsarkoro</h6>
+                            <h6>{{$detail->alamat}}</h6>
                         </div>
                         <div class="col-md-6">
                             <small class="text-muted">Info</small>
-                            <h6>BRI. 123</h6>
+                            <h6>{{$detail->info}}</h6>
                         </div>
                     </div>
 
@@ -83,12 +83,20 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                            <th scope="row">1</th>
-                            <td>Paket Internet</td>
-                            <td>100000</td>
-                            <td>Aktif</td>
-                            </tr>
+                            @php
+                                $no = 1;
+                            @endphp
+                            @foreach ($paket as $item)
+                                <tr>
+                                    <th scope="row">1</th>
+                                    <td>{{$item->nama_paket}}</td>
+                                    <td>{{$item->tarif}}</td>
+                                    <td>{{$item->status}}</td>
+                                </tr> 
+                                @php
+                                    $no = 1;
+                                @endphp
+                            @endforeach
                         </tbody>
                     </table>
                 </div>
@@ -115,12 +123,21 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                            <th scope="row">1</th>
-                            <td><a href="{{url('/pelanggan/detail/{id}')}}">Nama Pelanggan<a></td>
-                            <td>Paket Internet</td>
-                            <td>Aktif</td>
-                            </tr>
+                            @php
+                                $no = 1;
+                            @endphp
+                            @foreach ($berlangganan as $item)
+                                <tr>
+                                    <th scope="row">{{$no}}</th>
+                                    <td><a href="{{url('/pelanggan/detail/'.$item->id)}}">{{$item->nama}}<a></td>
+                                    <td>{{$item->nama_paket}}</td>
+                                    <td>{{$item->status}}</td>
+                                </tr>
+                                @php
+                                    $no++;
+                                @endphp  
+                            @endforeach
+                            
                         </tbody>
                     </table>
                 </div>
