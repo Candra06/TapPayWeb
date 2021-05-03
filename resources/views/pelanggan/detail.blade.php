@@ -31,31 +31,27 @@
                     <div class="row">
                         <div class="col-md-6">
                             <small class="text-muted">Nama Pelanggan</small>
-                            <h6>Nama Pelanggan</h6>
+                            <h6>{{$detail->nama}}</h6>
                         </div>
                         <div class="col-md-6">
                             <small class="text-muted">Username</small>
-                            <h6>username</h6>
+                            <h6>{{$detail->username}}</h6>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-md-6">
                             <small class="text-muted">Telepon</small>
-                            <h6>0888888888888</h6>
-                        </div>
-                        <div class="col-md-6">
-                            <small class="text-muted">Password</small>
-                            <h6>username123</h6>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <small class="text-muted">Alamat</small>
-                            <h6>Jl. KIS Mangunsarkoro</h6>
+                            <h6>{{$detail->telepon}}</h6>
                         </div>
                         <div class="col-md-6">
                             <small class="text-muted">Status</small>
-                            <h6>Aktif</h6>
+                            <h6>{{$detail->status}}</h6>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <small class="text-muted">Alamat</small>
+                            <h6>{{$detail->alamat}}</h6>
                         </div>
                     </div>
                 </div>
