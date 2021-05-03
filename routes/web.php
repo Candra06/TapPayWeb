@@ -14,8 +14,9 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('home.index');
+    return view('home.login');
 });
+Route::post('/login', 'UsersController@login');
 
 Route::get('/mitra', 'MitraController@index');
 Route::get('/mitra/detail/{id}', 'MitraController@show');
