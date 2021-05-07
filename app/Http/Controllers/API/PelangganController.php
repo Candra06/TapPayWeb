@@ -80,7 +80,7 @@ class PelangganController extends Controller
     {
         try {
 
-            $rekap = Tagihan::where('collector', Auth::user()->id)
+            $pendapatan = Tagihan::where('collector', Auth::user()->id)
                 ->where('status_tagihan', 'Lunas')
                 ->whereMonth('tagihan_bulan', Date('m'))
                 ->sum('jumlah_tagihan');
@@ -89,7 +89,7 @@ class PelangganController extends Controller
                 ->whereMonth('tagihan_bulan', Date('m'))
                 ->sum('jumlah_tagihan');
             return response()->json([
-                'pendapatan' => $rekap,
+                'pendapatan' => $pendapatan,
                 'tagihan' => $rekap,
             ], 200);
         } catch (\Throwable $th) {
