@@ -18,10 +18,16 @@ Route::get('/', function () {
 });
 Route::post('/login', 'UsersController@login');
 
-Route::get('/mitra', 'MitraController@index');
-Route::get('/mitra/detail/{id}', 'MitraController@show');
-Route::get('/mitra/edit/{id}', function($id){return view('mitra.edit');});
-
-Route::get('/pelanggan', 'PelangganController@index');
-Route::get('/pelanggan/detail/{id}', 'PelangganController@show');
-Route::get('/pelanggan/edit/{id}', function($id){return view('pelanggan.edit');});
+Route::group(['middleware' => 'loginCek'], function () {
+    Route::get('/dashboard', 'HomeController@index');
+    Route::get('/mitra', 'MitraController@index');
+    Route::get('/mitra/detail/{id}', 'MitraController@show');
+    Route::get('/mitra/edit/{id}', function ($id) {
+        return view('mitra.edit');
+    });
+    Route::get('/pelanggan', 'PelangganController@index');
+    Route::get('/pelanggan/detail/{id}', 'PelangganController@show');
+    Route::get('/pelanggan/edit/{id}', function ($id) {
+        return view('pelanggan.edit');
+    });
+});

@@ -97,10 +97,11 @@ class UsersController extends Controller
                 return redirect('/')->with('message', 'Anda bukan admin!');
             } else {
                 if (password_verify($request->password, $data->password)) {
+
+                    return $data;
                     session()->put('login', true);
-                    session()->put('email', $data->email);
-                    session()->put('nama', $data->nama);
-                    session()->put('username', $data->email);
+                    session()->put('nama', 'Admin');
+                    session()->put('username', $data->username);
                     session()->put('id', $data->id);
                     return redirect('dashboard')->with('message', 'Selamat datang!');
                 } else {

@@ -44,6 +44,9 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::group(['prefix' => 'tagihan'], function(){
         Route::post('generate', 'API\TagihanController@generate');
         Route::get('payable/{idPayer}', 'API\TagihanController@payable');
+        Route::get('list', 'API\TagihanController@historyTagihan');
+        Route::get('detail/{id}', 'API\TagihanController@detailTagihan');
+        Route::post('pembayaran', 'API\TagihanController@createTagihan');
     });
 });
 Route::middleware('auth:api')->get('/user', function (Request $request) {
