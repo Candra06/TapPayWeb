@@ -80,11 +80,11 @@ class PelangganController extends Controller
     {
         try {
 
-            $rekap = Tagihan::where('collector', Auth::id())
+            $rekap = Tagihan::where('collector', Auth::user()->id)
                 ->where('status_tagihan', 'Lunas')
                 ->whereMonth('tagihan_bulan', Date('m'))
                 ->sum('jumlah_tagihan');
-            $rekap = Tagihan::where('payer', Auth::id())
+            $rekap = Tagihan::where('payer',Auth::user()->id)
                 ->where('status_tagihan', 'Masuk')
                 ->whereMonth('tagihan_bulan', Date('m'))
                 ->sum('jumlah_tagihan');
