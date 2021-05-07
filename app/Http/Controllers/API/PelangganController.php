@@ -7,6 +7,7 @@ use App\Mitra;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
 use App\Pelanggan;
+use App\Tagihan;
 use Illuminate\Http\Request;
 
 class PelangganController extends Controller
@@ -31,7 +32,7 @@ class PelangganController extends Controller
                     'created_at' => Date('Y-m-d H:i:s'),
                     'updated_at' => Date('Y-m-d H:i:s'),
                 ]);
-            }else {
+            } else {
                 Berlangganan::create([
                     'id_mitra' => $id_mitra->id,
                     'id_pelanggan' => $request->id_pelanggan,
@@ -67,6 +68,29 @@ class PelangganController extends Controller
             ]);
             return response()->json([
                 'success' => 'Successfully input invitation!'
+            ], 200);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'error' => $th
+            ], 400);
+        }
+    }
+
+    public function homeMitra()
+    {
+        try {
+
+            $rekap = Tagihan::where('collector', Auth::id())
+                ->where('status_tagihan', 'Lunas')
+                ->whereMonth('tagihan_bulan', Date('m'))
+                ->sum('jumlah_tagihan');
+            $rekap = Tagihan::where('payer', Auth::id())
+                ->where('status_tagihan', 'Masuk')
+                ->whereMonth('tagihan_bulan', Date('m'))
+                ->sum('jumlah_tagihan');
+            return response()->json([
+                'pendapatan' => $rekap,
+                'tagihan' => $rekap,
             ], 200);
         } catch (\Throwable $th) {
             return response()->json([

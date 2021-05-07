@@ -32,6 +32,7 @@ Route::group(['middleware' => 'auth:api'], function () {
         Route::post('paket/create', 'API\PaketController@store');
         Route::post('paket/edit/{id}', 'API\PaketController@update');
         Route::get('paket/delete/{id}', 'API\PaketController@destroy');
+        Route::get('home', 'API\PelangganController@homeMitra');
 
 
     });
