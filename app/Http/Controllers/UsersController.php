@@ -98,7 +98,7 @@ class UsersController extends Controller
             } else {
                 if (password_verify($request->password, $data->password)) {
 
-                    return $data;
+                    // return $data;
                     session()->put('login', true);
                     session()->put('nama', 'Admin');
                     session()->put('username', $data->username);

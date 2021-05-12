@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Mitra;
 use App\Tagihan;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 {
@@ -14,11 +16,10 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $data = Tagihan::leftJoin('users', 'users.id', 'tagihan.payer')
-        ->select('users.username', 'tagihan.*')
-        ->where('tagihan.payer', '=', 'users.role')
-        ->orwhere('users.role', '=', 'mitra')
+        // return  session('id');
+        $data = Tagihan::where('collector',session('id'))
         ->get();
+        $mitra = Mitra::count();
         // return $data;
         return view('home.index', compact('data'));
     }
