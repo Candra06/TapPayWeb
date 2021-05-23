@@ -6,6 +6,7 @@ use App\Mitra;
 use App\Paket;
 use App\Berlangganan;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class MitraController extends Controller
 {
@@ -16,11 +17,10 @@ class MitraController extends Controller
      */
     public function index()
     {
-        $data = Mitra::leftJoin('users', 'users.id', 'mitra.id_akun')
+        $mitra = Mitra::leftJoin('users', 'users.id', 'mitra.id_akun')
         ->select('users.username', 'mitra.*')
         ->get();
-        // return $data;
-        return view('mitra.index', compact('data'));
+        return view('mitra.index', compact('mitra'));
     }
 
     /**
@@ -75,7 +75,12 @@ class MitraController extends Controller
      */
     public function edit($id)
     {
-        return view('mitra.edit');
+        $mitra = Mitra::leftJoin('users', 'users.id', 'mitra.id_akun')
+        ->select('users.username', 'mitra.*')
+        ->where('mitra.id', $id)
+        ->first();
+        // ->find($id);
+        return view('mitra.edit', compact('mitra'));
     }
 
     /**
@@ -87,7 +92,30 @@ class MitraController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+            'nama_usaha' => 'required',
+            'username' => 'required',
+            'telepon' => 'required',
+            'status' => 'required',
+            'alamat' => 'required',
+        ]);
+
+        $input['nama_usaha'] = $request['nama_usaha'];
+        $input['username'] = $request['username'];
+        $input['telepon'] = $request['telepon'];
+        $input['status'] = $request['status'];
+        $input['alamat'] = $request['alamat'];
+        $input['info'] = $request['info'];
+
+        try {
+            Mitra::leftJoin('users', 'users.id', 'mitra.id_akun')
+            ->select('users.username', 'mitra.*')
+            ->where('mitra.id', $id)
+            ->update($input);
+            return redirect('/mitra')->with('status', 'Berhasil mengubah data');
+        } catch (\Throwable $th) {
+            return redirect('/mitra/edit/'.$id)->with('status', 'Gagal mengubah data');
+        }
     }
 
     /**
@@ -98,6 +126,11 @@ class MitraController extends Controller
      */
     public function destroy($id)
     {
-        //
+        try {
+            Mitra::destroy('id', $id);
+            return redirect('/mitra')->with('status', 'Data Berhasil Dihapus');
+        } catch (\Throwable $th) {
+            return redirect('/mitra')->with('status', 'Data Gagal Dihapus');
+        }
     }
 }

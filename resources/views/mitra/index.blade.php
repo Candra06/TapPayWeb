@@ -42,7 +42,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                               @foreach ($data as $item)
+                               @foreach ($mitra as $item)
                                 <tr>
                                     <td><a href="{{ url('/mitra/detail/'.$item->id)}}">{{ $item->nama_usaha }}</a></td>
                                     <td>{{ $item->telepon }}</td>
@@ -50,7 +50,7 @@
                                     <td>{{ $item->status }}</td>
                                     <td>
                                         <a href="{{url('/mitra/edit/'.$item->id)}}" class="btn btn-info"><span><i class="fa fa-pencil"></i></span></a>
-                                        <a href="" class="btn btn-danger"><span><i class="fa fa-trash"></i></span></a>
+                                        <a href="{{url('/mitra/delete/'.$item->id) }}" class="btn btn-danger"><span><i class="fa fa-trash"></i></span></a>
                                     </td>
                                 </tr>
                                @endforeach
