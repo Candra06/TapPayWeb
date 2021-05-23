@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Pelanggan;
 use Illuminate\Http\Request;
+use App\Berlangganan;
+use App\Mitra;
+use App\Pelanggan;
+use App\Tagihan;
 
-class PelangganController extends Controller
+class TagihanController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,11 +17,13 @@ class PelangganController extends Controller
      */
     public function index()
     {
-        $data = Pelanggan::leftjoin('users', 'users.id', 'pelanggan.id_akun')
-            ->select('users.username', 'pelanggan.*')
+        $data = Tagihan::leftJoin('users', 'users.id', 'tagihan.payer')
+            ->leftjoin('mitra', 'mitra.id_akun', 'users.id')
+            ->where('tagihan.collector', session('id'))
+            ->select('tagihan.*', 'mitra.nama_usaha', 'mitra.id as id_mitra')
             ->get();
-        // return $data;
-        return view('pelanggan.index', compact('data'));
+
+        return view('tagihan.index', compact('data'));
     }
 
     /**
@@ -50,11 +55,7 @@ class PelangganController extends Controller
      */
     public function show($id)
     {
-        $detail = Pelanggan::leftJoin('users', 'users.id', 'pelanggan.id_akun')
-            ->select('users.username', 'pelanggan.*')
-            ->where('pelanggan.id', $id)
-            ->first();
-        return view('pelanggan.detail', compact('detail'));
+        return $id;
     }
 
     /**
@@ -65,12 +66,13 @@ class PelangganController extends Controller
      */
     public function edit($id)
     {
-        $data = Pelanggan::leftJoin('users', 'users.id', 'pelanggan.id_akun')
-            ->select('users.username', 'pelanggan.*')
-            ->where('pelanggan.id', $id)
+        $data = Tagihan::leftJoin('users', 'users.id', 'tagihan.payer')
+            ->leftJoin('mitra', 'mitra.id_akun', 'users.id')
+            ->where('tagihan.id', $id)
+            ->select('tagihan.*', 'mitra.nama_usaha', 'mitra.id as id_mitra')
             ->first();
         // return $data;
-        return view('pelanggan.edit', compact('data'));
+        return view('tagihan.detail', compact('data'));
     }
 
     /**
@@ -82,25 +84,13 @@ class PelangganController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $request->validate([
-            'nama' => 'required',
-            'telepon' => 'required',
-            'status' => 'required',
-            'alamat' => 'required',
-        ]);
-
+        // return $request;
         try {
-            $input['telepon'] = $request['telepon'];
-            $input['status'] = $request['status'];
-            $input['alamat'] = $request['alamat'];
-            $input['nama'] = $request['nama'];
-            Pelanggan::where('id', $id)->update($input);
-            return redirect('/pelanggan')->with('status', 'Berhasil mengubah data');
+            Tagihan::where('id', $id)->update(['status_tagihan' => $request['status_tagihan'], 'updated_by' => session('id'), 'updated_at' => Date('Y-m-d H:i:s')]);
+            return redirect('/tagihan')->with('status', 'Berhasil mengubah tagihan');
         } catch (\Throwable $th) {
-            return $th;
-            return redirect('/pelanggan/edit/' . $id)->with('status', 'Gagal mengubah data');
+            return redirect('/tagihan')->with('error', 'Gagal mengubah tagihan');
         }
-        // retu
     }
 
     /**

@@ -7,7 +7,7 @@
         <div class="col-md-5 col-8 align-self-center">
             <h3 class="text-themecolor">Data Mitra</h3>
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="{{url('/')}}">Home</a></li>
+                <li class="breadcrumb-item"><a href="{{url('/dashboard')}}">Home</a></li>
                 <li class="breadcrumb-item active">Mitra</li>
             </ol>
         </div>
@@ -50,7 +50,7 @@
                                     <td>{{ $item->status }}</td>
                                     <td>
                                         <a href="{{url('/mitra/edit/'.$item->id)}}" class="btn btn-info"><span><i class="fa fa-pencil"></i></span></a>
-                                        <a href="{{url('/mitra/delete/'.$item->id) }}" class="btn btn-danger"><span><i class="fa fa-trash"></i></span></a>
+                                        {{-- <a href="{{url('/mitra/delete/'.$item->id) }}" class="btn btn-danger"><span><i class="fa fa-trash"></i></span></a> --}}
                                     </td>
                                 </tr>
                                @endforeach
