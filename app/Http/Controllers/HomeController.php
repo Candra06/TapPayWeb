@@ -22,7 +22,7 @@ class HomeController extends Controller
     {
         // return  session('id');
 
-            $data = Tagihan::leftJoin('users', 'users.id', 'tagihan.payer')
+        $data = Tagihan::leftJoin('users', 'users.id', 'tagihan.payer')
             ->leftjoin('mitra', 'mitra.id_akun', 'users.id')
             ->where('tagihan.collector', session('id'))
             ->whereMonth('tagihan_bulan', Date('m'))
@@ -34,9 +34,9 @@ class HomeController extends Controller
         $count = Berlangganan::where('id_mitra', 1)->count();
         $tarif = $count * 1000;
         $pendapatan = Tagihan::where('collector', session('id'))
-                ->where('status_tagihan', 'Lunas')
-                ->whereMonth('tagihan_bulan', Date('m'))
-                ->sum('jumlah_tagihan');
+            ->where('status_tagihan', 'Lunas')
+            ->whereMonth('tagihan_bulan', Date('m'))
+            ->sum('jumlah_tagihan');
         return view('home.index', compact('data', 'mitra', 'pelanggan', 'pendapatan'));
     }
 

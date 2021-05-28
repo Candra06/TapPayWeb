@@ -211,4 +211,24 @@ class TagihanController extends Controller
             ],  $this->fail);
         }
     }
+
+    public function detailTagihanPelanggan($id)
+    {
+        try {
+            $data = Tagihan::leftJoin('berlangganan', 'berlangganan.id_pelanggan', 'tagihan.payer')
+                ->leftJoin('paket', 'paket.id', 'berlangganan.id_paket')
+                ->leftJoin('users', 'users.id', 'tagihan.payer')
+                ->leftJoin('pelanggan', 'pelanggan.id_akun', 'users.id')
+                ->where('tagihan.id', $id)
+                ->select('tagihan.*', 'paket.nama_paket', 'pelanggan.nama')
+                ->first();
+            return response()->json([
+                'data' => $data
+            ],  $this->oke);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'error' => $th
+            ],  $this->fail);
+        }
+    }
 }

@@ -32,6 +32,7 @@ Route::group(['middleware' => 'auth:api'], function () {
         Route::post('paket/create', 'API\PaketController@store');
         Route::post('paket/edit/{id}', 'API\PaketController@update');
         Route::get('paket/delete/{id}', 'API\PaketController@destroy');
+        Route::get('listPelanggan', 'API\PelangganController@listPelanggan');
         Route::get('home', 'API\PelangganController@homeMitra');
 
 
@@ -47,6 +48,7 @@ Route::group(['middleware' => 'auth:api'], function () {
         Route::get('payable/{idPayer}', 'API\TagihanController@payable');
         Route::get('list', 'API\TagihanController@historyTagihan');
         Route::get('detail/{id}', 'API\TagihanController@detailTagihan');
+        Route::get('pelanggan/{id}', 'API\TagihanController@detailTagihanPelanggan');
         Route::post('pembayaran', 'API\TagihanController@createTagihan');
     });
 });
