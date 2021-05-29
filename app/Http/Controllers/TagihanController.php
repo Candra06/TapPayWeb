@@ -3,9 +3,12 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\User;
+use App\Berlangganan;
+use App\Mitra;
+use App\Pelanggan;
+use App\Tagihan;
 
-class UsersController extends Controller
+class TagihanController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,7 +17,13 @@ class UsersController extends Controller
      */
     public function index()
     {
-        //
+        $data = Tagihan::leftJoin('users', 'users.id', 'tagihan.payer')
+            ->leftjoin('mitra', 'mitra.id_akun', 'users.id')
+            ->where('tagihan.collector', session('id'))
+            ->select('tagihan.*', 'mitra.nama_usaha', 'mitra.id as id_mitra')
+            ->get();
+
+        return view('tagihan.index', compact('data'));
     }
 
     /**
@@ -46,7 +55,7 @@ class UsersController extends Controller
      */
     public function show($id)
     {
-        //
+        return $id;
     }
 
     /**
@@ -57,7 +66,13 @@ class UsersController extends Controller
      */
     public function edit($id)
     {
-        //
+        $data = Tagihan::leftJoin('users', 'users.id', 'tagihan.payer')
+            ->leftJoin('mitra', 'mitra.id_akun', 'users.id')
+            ->where('tagihan.id', $id)
+            ->select('tagihan.*', 'mitra.nama_usaha', 'mitra.id as id_mitra')
+            ->first();
+        // return $data;
+        return view('tagihan.detail', compact('data'));
     }
 
     /**
@@ -69,7 +84,13 @@ class UsersController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        // return $request;
+        try {
+            Tagihan::where('id', $id)->update(['status_tagihan' => $request['status_tagihan'], 'updated_by' => session('id'), 'updated_at' => Date('Y-m-d H:i:s')]);
+            return redirect('/tagihan')->with('status', 'Berhasil mengubah tagihan');
+        } catch (\Throwable $th) {
+            return redirect('/tagihan')->with('error', 'Gagal mengubah tagihan');
+        }
     }
 
     /**
@@ -81,35 +102,5 @@ class UsersController extends Controller
     public function destroy($id)
     {
         //
-    }
-
-    public function login(Request $request)
-    {
-        $request->validate([
-            'username' => 'required',
-            'password' => 'required',
-        ]);
-        // return $request;
-        $data = User::where('username', $request->username)->first();
-        if ($data) {
-            if ($data->role != 'Admin') {
-                // return 'Anda bukan admin!';
-                return redirect('/')->with('message', 'Anda bukan admin!');
-            } else {
-                if (password_verify($request->password, $data->password)) {
-
-                    // return $data;
-                    session()->put('login', true);
-                    session()->put('nama', 'Admin');
-                    session()->put('username', $data->username);
-                    session()->put('id', $data->id);
-                    return redirect('dashboard')->with('message', 'Selamat datang!');
-                } else {
-                    return redirect('/')->with('message', 'Password salah!');
-                }
-            }
-        } else {
-            return redirect('/')->with('message', 'Email tidak teredaftar!');
-        }
     }
 }

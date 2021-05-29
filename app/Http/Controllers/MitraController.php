@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use App\Mitra;
 use App\Paket;
 use App\Berlangganan;
+use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class MitraController extends Controller
 {
@@ -16,11 +18,10 @@ class MitraController extends Controller
      */
     public function index()
     {
-        $data = Mitra::leftJoin('users', 'users.id', 'mitra.id_akun')
-        ->select('users.username', 'mitra.*')
-        ->get();
-        // return $data;
-        return view('mitra.index', compact('data'));
+        $mitra = Mitra::leftJoin('users', 'users.id', 'mitra.id_akun')
+            ->select('users.username', 'mitra.*')
+            ->get();
+        return view('mitra.index', compact('mitra'));
     }
 
     /**
@@ -53,17 +54,17 @@ class MitraController extends Controller
     public function show($id)
     {
         $detail = Mitra::leftJoin('users', 'users.id', 'mitra.id_akun')
-        ->select('users.username', 'mitra.*')
-        ->where('mitra.id', $id)
-        ->first();
-
+            ->select('users.username', 'mitra.*')
+            ->where('mitra.id', $id)
+            ->first();
         $paket = Paket::where('id_mitra', $id)->get();
 
-        $berlangganan = Berlangganan::leftJoin('pelanggan', 'pelanggan.id', 'berlangganan.id_pelanggan')
-        ->leftjoin('paket', 'paket.id', 'berlangganan.id_paket')
-        ->select('pelanggan.nama', 'paket.nama_paket', 'pelanggan.status', 'pelanggan.id')
-        ->where('berlangganan.id_mitra', $id)
-        ->get();
+        $berlangganan = Berlangganan::leftjoin('users', 'users.id', 'berlangganan.id_pelanggan')
+            ->leftJoin('pelanggan', 'pelanggan.id_akun', 'users.id')
+            ->leftjoin('paket', 'paket.id', 'berlangganan.id_paket')
+            ->select('pelanggan.nama', 'paket.nama_paket', 'pelanggan.status', 'pelanggan.id')
+            ->where('berlangganan.id_mitra', $id)
+            ->get();
         return view('mitra.detail', compact('detail', 'paket', 'berlangganan'));
     }
 
@@ -75,7 +76,13 @@ class MitraController extends Controller
      */
     public function edit($id)
     {
-        return view('mitra.edit');
+        $mitra = Mitra::leftJoin('users', 'users.id', 'mitra.id_akun')
+            ->select('users.username', 'mitra.*')
+            ->where('mitra.id', $id)
+            ->first();
+        // ->find($id);
+        // return $mitra;
+        return view('mitra.edit', compact('mitra'));
     }
 
     /**
@@ -87,7 +94,39 @@ class MitraController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+            'nama_usaha' => 'required',
+
+            'telepon' => 'required',
+            'status' => 'required',
+            'alamat' => 'required',
+        ]);
+        // return $request;
+        // $user = array();
+        // if ($request['password']) {
+        //     $user['username'] = $request['username'];
+        //     $user['password'] = bcrypt($request['password']);
+        // }else{
+        //     $user['username'] = $request['username'];
+        // }
+
+        $input['nama_usaha'] = $request['nama_usaha'];
+        // $input['username'] = $request['username'];
+        $input['telepon'] = $request['telepon'];
+        $input['status'] = $request['status'];
+        $input['alamat'] = $request['alamat'];
+        $input['info'] = $request['info'];
+
+
+
+        try {
+            Mitra::where('id', $id)->update($input);
+            // User::where('id', $request['id_akun'])->update($user);
+            return redirect('/mitra')->with('status', 'Berhasil mengubah data');
+        } catch (\Throwable $th) {
+
+            return redirect('/mitra/edit/' . $id)->with('status', 'Gagal mengubah data');
+        }
     }
 
     /**
@@ -98,6 +137,11 @@ class MitraController extends Controller
      */
     public function destroy($id)
     {
-        //
+        try {
+            Mitra::destroy('id', $id);
+            return redirect('/mitra')->with('status', 'Data Berhasil Dihapus');
+        } catch (\Throwable $th) {
+            return redirect('/mitra')->with('status', 'Data Gagal Dihapus');
+        }
     }
 }

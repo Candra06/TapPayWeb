@@ -24,7 +24,7 @@
                         <div class="round round-lg align-self-center round-info"><i class="mdi mdi-human-greeting"></i>
                         </div>
                         <div class="m-l-10 align-self-center">
-                            <h3 class="m-b-0 font-lgiht">2376</h3>
+                            <h3 class="m-b-0 font-lgiht">{{ $mitra }}</h3>
                             <small class="text-muted m-b-0">Jumlah Mitra</small>
                         </div>
                     </div>
@@ -40,7 +40,7 @@
                         <div class="round round-lg align-self-center round-warning"><i class="mdi mdi-account-multiple"></i>
                         </div>
                         <div class="m-l-10 align-self-center">
-                            <h3 class="m-b-0 font-lgiht">2376</h3>
+                            <h3 class="m-b-0 font-lgiht">{{ $pelanggan }}</h3>
                             <small class="text-muted m-b-0">Jumlah Pelanggan</small>
                         </div>
                     </div>
@@ -56,8 +56,8 @@
                         <div class="round round-lg align-self-center round-primary"><i class="ti-wallet"></i>
                         </div>
                         <div class="m-l-10 align-self-center">
-                            <h3 class="m-b-0 font-lgiht">Rp. 1795</h3>
-                            <small class="text-muted m-b-0">Total Bayar</small>
+                            <h3 class="m-b-0 font-lgiht">Rp. {{Helper::uang($pendapatan)}}</h3>
+                            <small class="text-muted m-b-0">Pendapatan </small>
                         </div>
                     </div>
                 </div>
@@ -84,24 +84,37 @@
         <div class="col-lg-12 col-xlg-12 col-md-12">
             <div class="card">
                 <div class="card-body">
-                    <h4 class="card-title">List Tagihan</h4>
+                    <h4 class="card-title">List Tagihan Bulan {{ Helper::bulantahun(Date('Y-m-d'))}}</h4>
                     <div class="row">
                         <!-- Generate -->
                         <div class="col-lg-7">
-                            <button type="button" class="btn btn-info">Generate Tagihan</button>
+                            <a href="{{ url('/generate')}}">
+                                <button type="button" class="btn btn-info">Generate Tagihan</button>
+                            </a>
                         </div>
-                        <!-- Search -->
-                        <div class="col-lg-5">
-                            <form class="app-search">
-                                <input type="text" class="form-control" placeholder="Cari Tagihan"> 
-                            </form>
-                        </div>
+
                     </div>
-                    <div class="table-responsive m-t-40">
+                    @if (session('status'))
+                        <div class="alert alert-success mt-2" role="alert">
+                            {{ session('status') }}
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                    @endif
+                    @if (session('error'))
+                        <div class="alert alert-danger mt-2" role="alert">
+                            {{ session('error') }}
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                    @endif
+                    <div class="table-responsive ">
                         <table id="myTable" class="table table-bordered table-striped">
                             <thead>
                                 <tr>
-                                    <th>Username</th>
+                                    <th>Mitra</th>
                                     <th>Jumlah Tagihan</th>
                                     <th>Bulan</th>
                                     <th>Status</th>
@@ -110,16 +123,17 @@
                             </thead>
                             <tbody>
                                 @foreach ($data as $item)
-                                <tr>
-                                    <td><a href="{{ url('/mitra/detail/'.$item->payer)}}">{{$item->username}}</a></td>
-                                    <td>{{$item->jumlah_tagihan}}</td>
-                                    <td>{{date('M', strtotime($item->tagihan_bulan))}}</td>
-                                    <td>{{$item->status_tagihan}}</td>
-                                    <td>
-                                        <a href="{{url('/mitra/edit/'.$item->id)}}" class="btn btn-info"><span><i class="fa fa-pencil"></i></span></a>
-                                        <a href="" class="btn btn-danger"><span><i class="fa fa-trash"></i></span></a>
-                                    </td>
-                                </tr>
+                                    <tr>
+                                        <td><a
+                                                href="{{ url('/mitra/detail/' . $item->id_mitra) }}">{{ $item->nama_usaha }}</a>
+                                        </td>
+                                        <td>Rp. {{ Helper::uang($item->jumlah_tagihan) }}</td>
+                                        <td>{{ Helper::bulantahun($item->tagihan_bulan)}}</td>
+                                        <td>{{ $item->status_tagihan }}</td>
+                                        <td>
+                                            <a href="{{ url('/tagihan/'. $item->id.'/edit' ) }}" class="btn btn-info">Detail</a>
+                                        </td>
+                                    </tr>
                                 @endforeach
                             </tbody>
                         </table>

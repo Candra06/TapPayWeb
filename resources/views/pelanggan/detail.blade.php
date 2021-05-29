@@ -7,7 +7,7 @@
         <div class="col-md-5 col-8 align-self-center">
             <h3 class="text-themecolor">Data Pelanggan</h3>
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="{{url('/')}}">Home</a></li>
+                <li class="breadcrumb-item"><a href="{{url('/dashboard')}}">Home</a></li>
                 <li class="breadcrumb-item"><a href="{{url('/pelanggan')}}">Pelanggan</a></li>
                 <li class="breadcrumb-item active">Detail</li>
             </ol>

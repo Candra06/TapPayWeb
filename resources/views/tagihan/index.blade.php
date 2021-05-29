@@ -5,10 +5,10 @@
     <!-- ============================================================== -->
     <div class="row page-titles">
         <div class="col-md-5 col-8 align-self-center">
-            <h3 class="text-themecolor">Data Pelanggan</h3>
+            <h3 class="text-themecolor">Data Tagihan</h3>
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="{{url('/dashboard')}}">Home</a></li>
-                <li class="breadcrumb-item active">Pelanggan</li>
+                <li class="breadcrumb-item active">Tagihan</li>
             </ol>
         </div>
 
@@ -20,7 +20,7 @@
         <div class="col-lg-12 col-xlg-12 col-md-12">
             <div class="card">
                 <div class="card-body">
-                    <h4 class="card-title">Data Pelanggan</h4>
+                    <h4 class="card-title">Data Tagihan</h4>
 
                     @if (session('status'))
                         <div class="alert alert-success" role="alert">
@@ -30,13 +30,13 @@
                             </button>
                         </div>
                     @endif
-                    <div class="table-responsive m-t-40">
+                    <div class="table-responsive ">
                         <table id="myTable" class="table table-bordered table-striped">
                             <thead>
                                 <tr>
-                                    <th>Nama Pelanggan</th>
-                                    <th>Telepon</th>
-                                    <th>Username</th>
+                                    <th>Mitra</th>
+                                    <th>Jumlah Tagihan</th>
+                                    <th>Bulan</th>
                                     <th>Status</th>
                                     <th>Aksi</th>
                                 </tr>
@@ -44,13 +44,14 @@
                             <tbody>
                                 @foreach ($data as $item)
                                     <tr>
-                                        <td><a href="{{url('/pelanggan/detail/'.$item->id)}}">{{$item->nama}}</a></td>
-                                        <td>{{$item->telepon}}</td>
-                                        <td>{{$item->username}}</td>
-                                        <td>{{$item->status}}</td>
+                                        <td><a
+                                                href="{{ url('/mitra/detail/' . $item->id_mitra) }}">{{ $item->nama_usaha }}</a>
+                                        </td>
+                                        <td>{{ $item->jumlah_tagihan }}</td>
+                                        <td>{{ Helper::bulantahun($item->tagihan_bulan)}}</td>
+                                        <td>{{ $item->status_tagihan }}</td>
                                         <td>
-                                            <a href="{{url('/pelanggan/edit/'.$item->id)}}" class="btn btn-info"><span><i class="fa fa-pencil"></i></span></a>
-                                            {{-- <a href="" class="btn btn-danger"><span><i class="fa fa-trash"></i></span></a> --}}
+                                            <a href="{{ url('/tagihan/'. $item->id.'/edit' ) }}" class="btn btn-info">Detail</a>
                                         </td>
                                     </tr>
                                 @endforeach

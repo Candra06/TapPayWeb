@@ -15,8 +15,8 @@ class PelangganController extends Controller
     public function index()
     {
         $data = Pelanggan::leftjoin('users', 'users.id', 'pelanggan.id_akun')
-        ->select('users.username', 'pelanggan.*')
-        ->get();
+            ->select('users.username', 'pelanggan.*')
+            ->get();
         // return $data;
         return view('pelanggan.index', compact('data'));
     }
@@ -51,9 +51,9 @@ class PelangganController extends Controller
     public function show($id)
     {
         $detail = Pelanggan::leftJoin('users', 'users.id', 'pelanggan.id_akun')
-        ->select('users.username', 'pelanggan.*')
-        ->where('pelanggan.id', $id)
-        ->first();
+            ->select('users.username', 'pelanggan.*')
+            ->where('pelanggan.id', $id)
+            ->first();
         return view('pelanggan.detail', compact('detail'));
     }
 
@@ -65,7 +65,12 @@ class PelangganController extends Controller
      */
     public function edit($id)
     {
-        return view('pelanggan.edit');
+        $data = Pelanggan::leftJoin('users', 'users.id', 'pelanggan.id_akun')
+            ->select('users.username', 'pelanggan.*')
+            ->where('pelanggan.id', $id)
+            ->first();
+        // return $data;
+        return view('pelanggan.edit', compact('data'));
     }
 
     /**
@@ -77,7 +82,25 @@ class PelangganController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+            'nama' => 'required',
+            'telepon' => 'required',
+            'status' => 'required',
+            'alamat' => 'required',
+        ]);
+
+        try {
+            $input['telepon'] = $request['telepon'];
+            $input['status'] = $request['status'];
+            $input['alamat'] = $request['alamat'];
+            $input['nama'] = $request['nama'];
+            Pelanggan::where('id', $id)->update($input);
+            return redirect('/pelanggan')->with('status', 'Berhasil mengubah data');
+        } catch (\Throwable $th) {
+            return $th;
+            return redirect('/pelanggan/edit/' . $id)->with('status', 'Gagal mengubah data');
+        }
+        // retu
     }
 
     /**
