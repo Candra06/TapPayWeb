@@ -20,7 +20,7 @@ class PaketController extends Controller
     {
         try {
             $id = Mitra::where('id_akun', Auth::user()->id)->select('id')->first();
-            $data = Paket::where('id_mitra', $id)->get();
+            $data = Paket::where('id_mitra', $id->id)->get();
             if ($data->isNotEmpty()) {
                 return response()->json([
                     'data' => $data
