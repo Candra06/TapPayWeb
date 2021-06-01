@@ -104,7 +104,7 @@ class PelangganController extends Controller
             $id = Mitra::where('id_akun', Auth::user()->id)->select('id')->first();
             $data = Berlangganan::leftJoin('users', 'users.id', 'berlangganan.id_pelanggan')
                 ->leftJoin('pelanggan', 'pelanggan.id_akun', 'users.id')
-                ->where('berlangganan.id_mitra', $id->id)
+                ->where('berlangganan.id_mitra', Auth::user()->id)
                 ->select('pelanggan.*')
                 ->get();
             return response()->json([
