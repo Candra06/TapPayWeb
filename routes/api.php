@@ -51,6 +51,10 @@ Route::group(['middleware' => 'auth:api'], function () {
         Route::get('pelanggan/{id}', 'API\TagihanController@detailTagihanPelanggan');
         Route::post('pembayaran', 'API\TagihanController@createTagihan');
     });
+
+    Route::group(['prefix' => 'pelanggan'], function(){
+        Route::get('list', 'API\PelangganController@index');
+    });
 });
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();

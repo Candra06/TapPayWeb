@@ -13,6 +13,23 @@ use Illuminate\Http\Request;
 
 class PelangganController extends Controller
 {
+
+    public function index()
+    {
+        try {
+            $data = Pelanggan::leftJoin('users', 'users.id', 'pelanggan.id_akun')
+                ->select('pelanggan.*', 'users.username')
+                ->get();
+            return response()->json([
+                'data' => $data
+            ], 200);
+        } catch (\Throwable $th) {
+            return $th;
+            return response()->json([
+                'error' => $th
+            ], 200);
+        }
+    }
     public function createInvitation(Request $request)
     {
         $request->validate([
