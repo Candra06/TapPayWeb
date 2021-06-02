@@ -156,8 +156,9 @@ class TagihanController extends Controller
                     $tagihanPelanggan = Tagihan::leftJoin('berlangganan', 'id_pelanggan', 'tagihan.payer')
                         ->leftJoin('paket', 'paket.id', 'berlangganan.id_paket')
                         ->leftJoin('users', 'users.id', 'tagihan.collector')
+                        ->leftJoin('pelanggan', 'pelanggan.id_akun', 'users.id')
                         ->where('tagihan.collector', $id)->orderBy('tagihan.tagihan_bulan', 'DESC')
-                        ->select('tagihan.*', 'paket.nama_paket')
+                        ->select('tagihan.*', 'paket.nama_paket', 'pelanggan.nama', 'pelanggan.id_akun', 'pelanggan.id')
                         ->get();
                     $rekap = Tagihan::where('collector', $id)
                         ->where('status_tagihan', 'Lunas')
