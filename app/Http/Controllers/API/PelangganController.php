@@ -53,9 +53,6 @@ class PelangganController extends Controller
         $request->validate([
             'id_paket' => 'required',
             'kode_undangan' => 'required',
-            'nama' => 'required',
-            'alamat' => 'required',
-            'telepon' => 'required',
         ]);
 
         try {
