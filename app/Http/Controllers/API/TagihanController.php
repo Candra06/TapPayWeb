@@ -230,6 +230,7 @@ class TagihanController extends Controller
                 }
             }
         } catch (\Throwable $th) {
+            return $th;
             return response()->json([
                 'error' => $th
             ],  $this->fail);
