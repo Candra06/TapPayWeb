@@ -210,7 +210,7 @@ class TagihanController extends Controller
                 ],  $this->oke);
             } else {
                 if ($cek->payer == Auth::user()->id) {
-                    $data = Tagihan::select('*')
+                    $data = Tagihan::where('id', $id)->select('*')
                         ->first();
 
                     return response()->json([
