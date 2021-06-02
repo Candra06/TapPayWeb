@@ -77,11 +77,11 @@ class PelangganController extends Controller
                     'updated_at' => Date('Y-m-d H:i:s'),
                 ]);
                 Berlangganan::create([
-                    'id_mitra' => $id_mitra->id,
+                    'id_mitra' => $id_mitra->id_akun,
                     'id_pelanggan' => $user->id,
                     'id_paket' => $request->id_paket,
                     'kode_undangan' => $request->kode_undangan,
-                    'status' => 'Nonaktif',
+                    'status' => 'Aktif',
                     'created_at' => Date('Y-m-d H:i:s'),
                     'updated_at' => Date('Y-m-d H:i:s'),
                 ]);
