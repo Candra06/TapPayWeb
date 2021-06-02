@@ -153,10 +153,10 @@ class TagihanController extends Controller
                     $data = Tagihan::where('tagihan.payer', $id)->orderBy('tagihan.tagihan_bulan', 'DESC')
                         ->select('tagihan.*',)
                         ->get();
-                    $tagihanPelanggan = Tagihan::leftJoin('berlangganan', 'id_pelanggan', 'tagihan.payer')
+                    $tagihanPelanggan = Tagihan::leftJoin('berlangganan', 'berlangganan.id_pelanggan', 'tagihan.payer')
                         ->leftJoin('paket', 'paket.id', 'berlangganan.id_paket')
                         ->leftJoin('users', 'users.id', 'tagihan.collector')
-                        ->leftJoin('pelanggan', 'pelanggan.id_akun', 'users.id')
+                        ->leftJoin('pelanggan', 'pelanggan.id_akun', 'berlangganan.id_pelanggan')
                         ->where('tagihan.collector', $id)->orderBy('tagihan.tagihan_bulan', 'DESC')
                         ->select('tagihan.*', 'paket.nama_paket', 'pelanggan.nama', 'pelanggan.id_akun', 'pelanggan.id')
                         ->get();
