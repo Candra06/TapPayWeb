@@ -217,10 +217,10 @@ class TagihanController extends Controller
                         'data' => $data
                     ],  $this->oke);
                 } else {
-                    $data = Tagihan::leftJoin('berlangganan', 'id_pelanggan', 'tagihan.payer')
+                    $data = Tagihan::leftJoin('berlangganan', 'berlangganan.id_pelanggan', 'tagihan.payer')
                         ->leftJoin('paket', 'paket.id', 'berlangganan.id_paket')
                         ->leftJoin('users', 'users.id', 'tagihan.collector')
-                        ->leftJoin('pelanggan', 'pelanggan.id_akun', 'tagihan.id_pelanggan')
+                        ->leftJoin('pelanggan', 'pelanggan.id_akun', 'berlangganan.id_pelanggan')
                         ->where('tagihan.id', $id)
                         ->select('tagihan.*', 'paket.nama_paket', 'pelanggan.nama')
                         ->first();
