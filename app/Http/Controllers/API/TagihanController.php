@@ -196,7 +196,7 @@ class TagihanController extends Controller
     public function detailTagihan($id)
     {
         try {
-            $cek = Tagihan::whete('id', $id)->first();
+            $cek = Tagihan::where('id', $id)->first();
             if (Auth::user()->role == 'Pelanggan') {
                 $data = Tagihan::leftJoin('berlangganan', 'id_pelanggan', 'tagihan.payer')
                     ->leftJoin('paket', 'paket.id', 'berlangganan.id_paket')
