@@ -196,16 +196,39 @@ class TagihanController extends Controller
     public function detailTagihan($id)
     {
         try {
-            $data = Tagihan::leftJoin('berlangganan', 'id_pelanggan', 'tagihan.payer')
-                ->leftJoin('paket', 'paket.id', 'berlangganan.id_paket')
-                ->leftJoin('users', 'users.id', 'tagihan.collector')
-                ->leftJoin('mitra', 'mitra.id_akun', 'users.id')
-                ->where('tagihan.id', $id)
-                ->select('tagihan.*', 'paket.nama_paket', 'mitra.nama_usaha')
-                ->first();
-            return response()->json([
-                'data' => $data
-            ],  $this->oke);
+            $cek = Tagihan::whete('id', $id)->first();
+            if (Auth::user()->role == 'Pelanggan') {
+                $data = Tagihan::leftJoin('berlangganan', 'id_pelanggan', 'tagihan.payer')
+                    ->leftJoin('paket', 'paket.id', 'berlangganan.id_paket')
+                    ->leftJoin('users', 'users.id', 'tagihan.collector')
+                    ->leftJoin('mitra', 'mitra.id_akun', 'users.id')
+                    ->where('tagihan.id', $id)
+                    ->select('tagihan.*', 'paket.nama_paket', 'mitra.nama_usaha')
+                    ->first();
+                return response()->json([
+                    'data' => $data
+                ],  $this->oke);
+            } else {
+                if ($cek->payer == Auth::user()->id) {
+                    $data = Tagihan::select('*')
+                        ->first();
+
+                    return response()->json([
+                        'data' => $data
+                    ],  $this->oke);
+                } else {
+                    $data = Tagihan::leftJoin('berlangganan', 'id_pelanggan', 'tagihan.payer')
+                        ->leftJoin('paket', 'paket.id', 'berlangganan.id_paket')
+                        ->leftJoin('users', 'users.id', 'tagihan.collector')
+                        ->leftJoin('pelanggan', 'pelanggan.id_akun', 'users.id')
+                        ->where('tagihan.id', $id)
+                        ->select('tagihan.*', 'paket.nama_paket', 'pelanggan.nama')
+                        ->first();
+                    return response()->json([
+                        'data' => $data
+                    ],  $this->oke);
+                }
+            }
         } catch (\Throwable $th) {
             return response()->json([
                 'error' => $th
