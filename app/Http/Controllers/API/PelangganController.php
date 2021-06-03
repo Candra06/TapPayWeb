@@ -161,6 +161,10 @@ class PelangganController extends Controller
                 ->where('status_tagihan', 'Masuk')
                 ->whereMonth('tagihan_bulan', Date('m'))
                 ->sum('jumlah_tagihan');
+            $tagihan = Tagihan::where('payer', Auth::user()->id)
+                ->where('status_tagihan', 'Masuk')
+                ->whereMonth('tagihan_bulan', Date('m'))
+                ->get();
             $pelanggan = Berlangganan::where('id_mitra', Auth::user()->id)
                 ->count();
             $jumlah_bayar = Tagihan::leftJoin('users', 'users.id', 'tagihan.payer')
@@ -177,7 +181,8 @@ class PelangganController extends Controller
                 ->count();
             return response()->json([
                 'pendapatan' => $pendapatan,
-                'tagihan' => $rekap,
+                'rekap' => $rekap,
+                'tagihan' => $tagihan,
                 'pelanggan' => $pelanggan,
                 'jumlah_bayar' => $jumlah_bayar,
                 'jumlah_belum_bayar' => $jumlah_belum_bayar,

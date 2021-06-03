@@ -29,7 +29,7 @@ class TagihanController extends Controller
                 ->where('berlangganan.status', 'Aktif')
                 ->select('berlangganan.*', 'paket.tarif', 'pelanggan.id_akun')
                 ->get();
-                // return $data;
+            // return $data;
             $cek = Tagihan::whereMonth('tagihan_bulan', Date('m'))->where('collector',  Auth::user()->id)->count();
 
             if ($cek > 0) {
@@ -56,7 +56,6 @@ class TagihanController extends Controller
                     'status' => '2'
                 ], $this->oke);
             }
-
         } catch (\Throwable $th) {
             return response()->json([
                 'error' => $th
@@ -90,61 +89,129 @@ class TagihanController extends Controller
 
     public function createTagihan(Request $request)
     {
-        $payer = $request['idPelanggan'];
-        // $bulan = $request['bulan'];
-        $data = Tagihan::where('payer', $payer)->where('status_tagihan', 'Masuk')->get();
-        $bulan = [];
-        $jumlah = 0;
-        $paylable = [];
-        foreach ($data as $key) {
-            $jumlah = $jumlah + $key->jumlah_tagihan;
-            $paylable[] = ([
-                'label' => Helper::bulantahun($key->tagihan_bulan),
-                'bulan' => $key->tagihan_bulan,
-                'jumlah' => $jumlah,
-                'id' => $key->id,
-            ]);
-        }
-        for ($i = 0; $i < count($paylable); $i++) {
-            array_push($bulan, $paylable[$i]['id']);
-            if ($paylable[$i]['bulan'] == $request['bulan']) {
-
-                if ($request['total'] < $paylable[$i]['jumlah']) {
-                    return response()->json([
-                        'error' => 'Jumlah pembayaran kurang dari total tagihan'
-                        // 'error' => $request['total']
-                    ],  $this->fail);
-                } else {
-                    for ($i = 0; $i < count($bulan); $i++) {
-                        if (Auth::user()->role == 'Mitra') {
-                            Tagihan::where('id', $bulan[$i])
-                                ->update([
-                                    'updated_by' => Auth::id(),
-                                    'updated_at' => Date('Y-m-d H:i:s'),
-                                    'status_tagihan' => 'Lunas',
-                                ]);
-                        } else {
-                            $fileType = $request->file('bukti')->extension();
-                            $name = Str::random(8) . '.' . $fileType;
-                            Storage::putFileAs('bukti', $request->file('bukti'), $name);
-                            Tagihan::where('id', $bulan[$i])
-                                ->update([
-                                    'updated_by' => Auth::id(),
-                                    'updated_at' => Date('Y-m-d H:i:s'),
-                                    'status_tagihan' => 'Lunas',
-                                    'bukti' => Storage::putFileAs('bukti', $request->file('bukti'), $name)
-                                ]);
-                        }
-                    }
-                    // Tagihan::where()
+        if (Auth::user()->role == 'Mitra') {
+            $cek = Tagihan::where('id', $request['id_tagihan'])->first();
+            if ($cek->payer == Auth::user()->id) {
+                try {
+                    $fileType = $request->file('bukti')->extension();
+                    $name = Str::random(8) . '.' . $fileType;
+                    Storage::putFileAs('bukti', $request->file('bukti'), $name);
+                    Tagihan::where('id', $request['id_tagihan'])
+                        ->update([
+                            'updated_by' => Auth::id(),
+                            'updated_at' => Date('Y-m-d H:i:s'),
+                            'status_tagihan' => 'Pending',
+                            'bukti' => Storage::putFileAs('bukti', $request->file('bukti'), $name)
+                        ]);
                     return response()->json([
                         'success' => 'Berhasil melakukan pembayaran'
                     ],  $this->oke);
+                } catch (\Throwable $th) {
+                    return response()->json([
+                        'error' => $th
+                    ],  $this->fail);
                 }
             } else {
-                array_push($bulan, $paylable[$i]['id']);
+                try {
+                    $fileType = $request->file('bukti')->extension();
+                    $name = Str::random(8) . '.' . $fileType;
+                    Storage::putFileAs('bukti', $request->file('bukti'), $name);
+                    Tagihan::where('id', $request['id_tagihan'])
+                        ->update([
+                            'updated_by' => Auth::id(),
+                            'updated_at' => Date('Y-m-d H:i:s'),
+                            'status_tagihan' => 'Lunas',
+                            'bukti' => Storage::putFileAs('bukti', $request->file('bukti'), $name)
+                        ]);
+                    return response()->json([
+                        'success' => 'Berhasil melakukan pembayaran'
+                    ],  $this->oke);
+                } catch (\Throwable $th) {
+                    return response()->json([
+                        'error' => $th
+                    ],  $this->fail);
+                }
+            }
+        } else {
+            try {
+                $fileType = $request->file('bukti')->extension();
+                $name = Str::random(8) . '.' . $fileType;
+                Storage::putFileAs('bukti', $request->file('bukti'), $name);
+                Tagihan::where('id', $request['id_tagihan'])
+                    ->update([
+                        'updated_by' => Auth::id(),
+                        'updated_at' => Date('Y-m-d H:i:s'),
+                        'status_tagihan' => 'Pending',
+                        'bukti' => Storage::putFileAs('bukti', $request->file('bukti'), $name)
+                    ]);
+                return response()->json([
+                    'success' => 'Berhasil melakukan pembayaran'
+                ],  $this->oke);
+            } catch (\Throwable $th) {
+                return response()->json([
+                    'error' => $th
+                ],  $this->fail);
             }
         }
+        // $payer = $request['idPelanggan'];
+        // // $bulan = $request['bulan'];
+        // $data = Tagihan::where('payer', $payer)->where('status_tagihan', 'Masuk')->get();
+        // $bulan = [];
+        // $jumlah = 0;
+        // $paylable = [];
+        // foreach ($data as $key) {
+        //     $jumlah = $jumlah + $key->jumlah_tagihan;
+        //     $paylable[] = ([
+        //         'label' => Helper::bulantahun($key->tagihan_bulan),
+        //         'bulan' => $key->tagihan_bulan,
+        //         'jumlah' => $jumlah,
+        //         'id' => $key->id,
+        //     ]);
+        // }
+        // for ($i = 0; $i < count($paylable); $i++) {
+        //     array_push($bulan, $paylable[$i]['id']);
+        //     if ($paylable[$i]['bulan'] == $request['bulan']) {
+
+        //         if ($request['total'] < $paylable[$i]['jumlah']) {
+        //             return response()->json([
+        //                 'error' => 'Jumlah pembayaran kurang dari total tagihan'
+        //                 // 'error' => $request['total']
+        //             ],  $this->fail);
+        //         } else {
+        //             for ($i = 0; $i < count($bulan); $i++) {
+        //                 if (Auth::user()->role == 'Mitra') {
+        //                     Tagihan::where('id', $bulan[$i])
+        //                         ->update([
+        //                             'updated_by' => Auth::id(),
+        //                             'updated_at' => Date('Y-m-d H:i:s'),
+        //                             'status_tagihan' => 'Lunas',
+        //                         ]);
+        //                     return response()->json([
+        //                         'success' => 'Berhasil melakukan pembayaran'
+        //                     ],  $this->oke);
+        //                 } else {
+        //                     $fileType = $request->file('bukti')->extension();
+        //                     $name = Str::random(8) . '.' . $fileType;
+        //                     Storage::putFileAs('bukti', $request->file('bukti'), $name);
+        //                     Tagihan::where('id', $bulan[$i])
+        //                         ->update([
+        //                             'updated_by' => Auth::id(),
+        //                             'updated_at' => Date('Y-m-d H:i:s'),
+        //                             'status_tagihan' => 'Lunas',
+        //                             'bukti' => Storage::putFileAs('bukti', $request->file('bukti'), $name)
+        //                         ]);
+        //                     return response()->json([
+        //                         'success' => 'Berhasil melakukan pembayaran'
+        //                     ],  $this->oke);
+        //                 }
+        //             }
+        //             // Tagihan::where()
+
+        //         }
+        //     } else {
+        //         array_push($bulan, $paylable[$i]['id']);
+        //     }
+        // }
     }
 
     public function historyTagihan()
