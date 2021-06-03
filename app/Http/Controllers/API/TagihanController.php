@@ -29,7 +29,7 @@ class TagihanController extends Controller
                 ->where('berlangganan.status', 'Aktif')
                 ->select('berlangganan.*', 'paket.tarif', 'pelanggan.id_akun')
                 ->get();
-            $cek = Tagihan::whereMonth('tagihan_bulan', Date('m'))->where('collector',  Auth::user()->id)->get();
+            $cek = Tagihan::whereMonth('tagihan_bulan', Date('m'))->where('collector',  Auth::user()->id)->count();
             return response()->json([
                 'success' => $cek,
                 'status' => '1'
