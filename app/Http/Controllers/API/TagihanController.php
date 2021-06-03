@@ -33,7 +33,8 @@ class TagihanController extends Controller
 
             if ($cek) {
                 return response()->json([
-                    'success' => 'Tagihan bulan ini sudah ada'
+                    'success' => 'Tagihan bulan ini sudah ada',
+                    'status' => '1'
                 ], 200);
             } else {
                 foreach ($data as $dt) {
@@ -51,7 +52,8 @@ class TagihanController extends Controller
                 }
             }
             return response()->json([
-                'success' => 'Berhasil generate tagihan'
+                'success' => 'Berhasil generate tagihan',
+                'status' => '2'
             ], $this->oke);
         } catch (\Throwable $th) {
             return response()->json([
