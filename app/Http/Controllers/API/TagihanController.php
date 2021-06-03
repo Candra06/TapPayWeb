@@ -25,7 +25,7 @@ class TagihanController extends Controller
             $mitra = Mitra::where('id_akun', Auth::user()->id)->select('id')->first();
             $data = Berlangganan::leftJoin('paket', 'paket.id', 'berlangganan.id_paket')
                 ->leftJoin('pelanggan', 'pelanggan.id_akun', 'berlangganan.id_pelanggan')
-                ->where('berlangganan.id_mitra', $mitra->id_akun)
+                ->where('berlangganan.id_mitra',  Auth::user()->id)
                 ->where('berlangganan.status', 'Aktif')
                 ->select('berlangganan.*', 'paket.tarif', 'pelanggan.id_akun')
                 ->get();
@@ -40,7 +40,7 @@ class TagihanController extends Controller
             } else {
                 foreach ($data as $dt) {
                     Tagihan::create([
-                        'collector' => $mitra->id,
+                        'collector' =>  Auth::user()->id,
                         'payer' => $dt->id_akun,
                         'jumlah_tagihan' => $dt->tarif,
                         'tagihan_bulan' => Date('Y-m-d'),
