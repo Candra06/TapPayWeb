@@ -30,7 +30,10 @@ class TagihanController extends Controller
                 ->select('berlangganan.*', 'paket.tarif', 'pelanggan.id_akun')
                 ->get();
             $cek = Tagihan::whereMonth('tagihan_bulan', Date('m'))->where('collector',  Auth::user()->id)->get();
-
+            return response()->json([
+                'success' => $cek,
+                'status' => '1'
+            ], 200);
             if ($cek) {
                 return response()->json([
                     'success' => 'Tagihan bulan ini sudah ada',
