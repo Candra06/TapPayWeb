@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\API\TagihanController;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Artisan;
 
 /*
 |--------------------------------------------------------------------------
