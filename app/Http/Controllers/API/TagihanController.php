@@ -24,13 +24,14 @@ class TagihanController extends Controller
         try {
             $mitra = Mitra::where('id_akun', Auth::user()->id)->select('id')->first();
             $data = Berlangganan::leftJoin('paket', 'paket.id', 'berlangganan.id_paket')
-                ->leftJoin('pelanggan', 'pelanggan.id', 'berlangganan.id_pelanggan')
+                ->leftJoin('pelanggan', 'pelanggan.id_akun', 'berlangganan.id_pelanggan')
                 ->where('berlangganan.id_mitra', $mitra->id)
                 ->where('berlangganan.status', 'Aktif')
                 ->select('berlangganan.*', 'paket.tarif', 'pelanggan.id_akun')
                 ->get();
+                // return $data;
             $cek = Tagihan::whereMonth('tagihan_bulan', Date('m'))->where('collector',  Auth::user()->id)->count();
-            
+
             if ($cek > 0) {
                 return response()->json([
                     'success' => 'Tagihan bulan ini sudah ada',
@@ -50,11 +51,12 @@ class TagihanController extends Controller
                         'updated_at' => Date('Y-m-d H:i:s'),
                     ]);
                 }
+                return response()->json([
+                    'success' => 'Berhasil generate tagihan',
+                    'status' => '2'
+                ], $this->oke);
             }
-            return response()->json([
-                'success' => 'Berhasil generate tagihan',
-                'status' => '2'
-            ], $this->oke);
+
         } catch (\Throwable $th) {
             return response()->json([
                 'error' => $th
