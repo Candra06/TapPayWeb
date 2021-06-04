@@ -308,6 +308,35 @@ class TagihanController extends Controller
         }
     }
 
+    public function updateTagihan(Request $request,)
+    {
+        try {
+            if ($request['status'] == 'Ditolak') {
+                Tagihan::where('id', $request['id'])->update([
+                    'updated_by' => Auth::user()->id,
+                    'updated_at' => Date('Y-m-d H:i:s'),
+                    'status_tagihan' => 'Ditolak'
+                ]);
+                return response()->json([
+                    'data' => $request['id']
+                ],  $this->oke);
+            } else {
+                Tagihan::where('id',  $request['id'])->update([
+                    'updated_by' => Auth::user()->id,
+                    'updated_at' => Date('Y-m-d H:i:s'),
+                    'status_tagihan' => 'Lunas'
+                ]);
+                return response()->json([
+                    'data' =>  $request['id']
+                ],  $this->oke);
+            }
+        } catch (\Throwable $th) {
+            return response()->json([
+                'error' => $th
+            ],  $this->fail);
+        }
+    }
+
     public function detailTagihanPelanggan($id)
     {
         try {
