@@ -35,7 +35,8 @@ class PelangganController extends Controller
     {
         try {
             $data = Pelanggan::leftJoin('users', 'users.id', 'pelanggan.id_akun')
-                ->select('pelanggan.*', 'users.username')
+                ->leftJoin('berlangganan', 'berlangganan.id_pelanggan', 'pelanggan.id_akun')
+                ->select('pelanggan.*', 'users.username', 'berlangganan.kode_undangan')
                 ->where('pelanggan.id', $id)
                 ->first();
             return response()->json([

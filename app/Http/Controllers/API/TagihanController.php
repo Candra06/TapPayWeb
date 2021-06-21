@@ -308,7 +308,7 @@ class TagihanController extends Controller
         }
     }
 
-    public function updateTagihan(Request $request,)
+    public function updateTagihan(Request $request)
     {
         try {
             if ($request['status'] == 'Ditolak') {
