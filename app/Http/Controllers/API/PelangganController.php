@@ -194,4 +194,28 @@ class PelangganController extends Controller
             ], 400);
         }
     }
+
+    public function homePelanggan()
+    {
+        try {
+
+            $tagihan =Tagihan::leftJoin('berlangganan', 'id_pelanggan', 'tagihan.payer')
+            ->leftJoin('paket', 'paket.id', 'berlangganan.id_paket')
+            ->leftJoin('users', 'users.id', 'tagihan.collector')
+            ->leftJoin('mitra', 'mitra.id_akun', 'users.id')
+            ->whereMonth('tagihan.tagihan_bulan', Date('m'))
+            ->where('tagihan.payer', Auth::user()->id)->orderBy('tagihan.tagihan_bulan', 'DESC')
+            ->select('tagihan.*', 'paket.nama_paket', 'mitra.nama_usaha')
+            ->get();
+
+            return response()->json([
+
+                'tagihan' => $tagihan,
+            ], 200);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'error' => $th
+            ], 400);
+        }
+    }
 }

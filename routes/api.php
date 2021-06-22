@@ -56,6 +56,7 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::group(['prefix' => 'pelanggan'], function(){
         Route::get('list', 'API\PelangganController@index');
         Route::get('detail/{id}', 'API\PelangganController@detail');
+        Route::get('home', 'API\PelangganController@homePelanggan');
     });
 });
 Route::middleware('auth:api')->get('/user', function (Request $request) {
